@@ -1,0 +1,111 @@
+#+TITLE: pyPEBEL Installation Documentation
+
+* Overview
+
+pyPEBEL has been designed as a python 2.7 module and has been built
+against the python 2.7 version of Charm. The deployment for pyPEBEL
+has been based solely on Ubuntu 12.04, NO OTHER platforms will be
+supported, unless there is a great demand. For now pyPEBEL needs to be
+installed by hand within python site-packages, a DistTools scripts is
+in the works.
+
+* Dependencies
+
+The current dependencies for pyPEBEL are:
+
++ [ ] Python 2.7
++ [ ] pyParsing 
++ [ ] pyCrypto
++ [ ] PBC
++ [ ] Charm for Python 2.7
+
+* Instructions
+
+** Prerequisites
+
+To install Charm on Ubuntu 12.04 the following tools also need to
+be installed.
+
+*** Building
+
+Git, m4, libssl-dev, checkinstall.
+
+#+begin_src sh
+sudo apt-get install git m4 libssl-dev checkinstall
+#+end_src
+
+[[http://asic-linux.com.mx/~izto/checkinstall/][Checkinstall]] is a nice Linux utility to install source build software
+inside a deb/rpm managed distro.
+
+*** Python Modules
+
+Both pyCrypto and pyParsing are within the standard repositories for
+python. Installation is simply:
+
+#+begin_src sh
+sudo pip install pycrypto
+sudo pip install pyparsing
+#+end_src
+
+*** PBC Library
+
+PBC is a pairing based crypto library, available from:
+http://crypto.stanford.edu/pbc/ There are deb files available, see the
+website for more information. Installation by hand is quite straight
+forward.
+
+** Charm
+
+We currently build against the Python 2.7 version of Charm. Charm was
+installed as follows:
+
+#+begin_src sh
+git clone https://github.com/JHUISI/charm.git
+git checkout 2.7-master
+sudo ./configure
+sudo make build
+sudo checkinstall
+sudo ldconfig
+#+end_src
+
+Please consult the Charm documentation for more information.
+
+** pyPEBEL
+
+Currently, pyPEBEL needs to be installed by hand; a disttools script
+is in the works. After extracting the project folder from the
+repository simply add the following to your .bashrc file.
+
+#+begin_src sh
+export PYPEBELROOT=<pyPEBEL Directory>
+export PYTHONPATH=$PYTHONPATH:$PYPEBELROOT
+export PATH:$PATH:$PYPEBELPROOT/pebel/scripts/
+#+end_src
+
+Where =<pyPEBEL Directory>= is the location of the project within your
+file system.
+
+* Building Documentation
+
+** API Documentation
+
+Although pyDoc can be used to generate the API documentation pyDoctor is
+the preferred documentation tool.
+
+#+begin_src sh
+sudo pip install pyDoctor
+pydoctor --project-name=pebel --make-html pebel
+#+end_src
+
+Documentation can then be found within the folder =apidocs=.
+
+** User Documentation
+
+The user/developer documentation is a simple LaTeX project. A build
+script is provided that has been tested against a default installation
+of TeXlive 2012.
+
+#+begin_src sh
+rake build
+rake clobber
+#+end_src
