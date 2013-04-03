@@ -1,3 +1,3 @@
-include CHANGELOG INSTALL README Makefile 
+include CHANGELOG INSTALL README.markdown Makefile 
 recursive-include doc
 graft pebel

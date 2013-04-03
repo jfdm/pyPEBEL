@@ -1,4 +1,3 @@
-==================================
 Predicate Based Encryption Library
 ==================================
 
@@ -12,8 +11,8 @@ Predicate Based Encryption Library
 A python 3.x module to support the use of the IBE, ABE, and PBE family
 of asymmetric encryption schemes within python scripts and modules.
 
-Overview
-========
+## Overview
+
 
 This module has been designed to facilitate the ease of use of several
 advanced crypto schemes within python scripts and modules. For each
@@ -25,30 +24,28 @@ operations follow the standard KEM/DEM setup. The plaintext is
 encrypted using a symmetric cipher (AES 256) and a randomly generated
 session key is encrypted using the advanced crypto-scheme.
 
-Predicate Based Encryption
-==========================
+## Predicate Based Encryption
 
-/Predicate Based Encryption/ (PBE) is a family of novel and modern
+__Predicate Based Encryption__ (PBE) is a family of novel and modern
 asymmetric encryption schemes in which the decryption of a cipher-text
 is dependent upon the satisfaction of a boolean predicate (access
 policy) by a set of attributes. This allows for expressive and
 fine-grained access control to be specified over cipher-texts. Namely
-PBE schemes allow for Encrypted /Attribute Based Access Control/
+PBE schemes allow for Encrypted __Attribute Based Access Control__
 (ABAC) to be implemented efficiently.
 
 There are two main types of PBE Scheme.
 
-The first /Ciphertext-Policy/ (CP) is when data is encrypted under a
+The first __Ciphertext-Policy__ (CP) is when data is encrypted under a
 boolean predicate, and decryption keys are constructed from sets of
 attributes. This directly mimics the access control provided by ABAC.
 
-The second /Key-Policy/ (KP), is when data is encrypted under a set of
+The second __Key-Policy__ (KP), is when data is encrypted under a set of
 attributes, and decryption keys are constructed from a set of
 attributes. This allows for capability based access control and is
 useful for providing keyword encrypted search over encrypted data.
 
-Supported Schemes
-=================
+## Supported Schemes
 
 Currently there is support for:
 
@@ -68,8 +65,7 @@ _Note:_ Only simple access policies and attributes can be specified
 
 
 
- Documentation
-==============
+## Documentation
 
 Installation instructions can be found within INSTALL.org.
 
@@ -80,8 +76,7 @@ Developer/User documentation, when completed, will be found within the
 docs folder. In the meantime example deployable scripts can be found
 within =bin=, and example shell commands in =doc/sample-innvocation.sh=
 
-Resources
-=========
+## Resources
 
 * Charm :: http://www.charm-crypto.com/
 * pyCrypto :: http://www.pycrypto.org/

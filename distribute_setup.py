@@ -17,7 +17,7 @@ setup(
     url='https://github.com/jfdm/pyPEBEL',
     license='BSD-new',
     description='A python 3.x module to support the use of the IBE, ABE, and PBE family of asymmetric encryption schemes within python scripts and modules.',
-    long_description=open('README').read(),
+    long_description=open('README.markdown').read(),
     install_requires=[
         "setuptools",
         "pyparsing >= 1.5.5",
