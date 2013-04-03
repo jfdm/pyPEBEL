@@ -14,6 +14,9 @@ usage: # Print Targets
 pep8: # Check for PEP8 compliance
 	pep8 --first ${SRC}
 
+pylint: # Analyse Source
+	pylint -f html --files-output=y
+
 apidocs: ${SRC} # Build API Documentation
 	pydoctor --project-name=pebel --make-html ${SRC}
 

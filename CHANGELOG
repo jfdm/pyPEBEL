@@ -1,0 +1,16 @@
+# -*- mode: org -*-
+#+TITLE: Change Log
+
+* New in 0.2.0 <2013-04-03>
+
++ Moved to Python3.x series
++ Using distribute/distutils for building.
+  - modifying doc file formats
+  - moving scripts to bin directory
+
+* Initial Release <2012-11-27>
+
++ Initial release of the project.
++ With API and script support for:
+  - CP-ABE Bethencourt2007cae
+  - KP-ABE Lewko2008rsw

@@ -1,6 +1,6 @@
-"""
-Decrypts ciphertexts encrypted using the KP-ABE Scheme from
-Lewko2008rsw.
+"""Decrypts ciphertexts encrypted using the CP-ABE Scheme from
+Bethencourt2007cae.
+
 """
 
 import struct
@@ -10,17 +10,18 @@ import argparse
 
 from charm.toolbox.pairinggroup import PairingGroup
 
-from pebel.kpabe import kpabe_decrypt
+from pebel.cpabe import cpabe_decrypt
 from pebel.util import read_key_from_file
 from pebel.exceptions import PebelDecryptionException
 
 def main():
-    """Wrapper function to decrypt a given ciphertext file using the
-    Lewko2008rsw KP-ABE Scheme.
+    """Wrapper function to decrypt a ciphertext file using the
+    Bethencourt2007cae CP-ABE Scheme.
+
     """
 
     parser = argparse.ArgumentParser(
-        description="Decrypts a given ciphertext, with name <fname>.kpabe," +
+        description="Decrypts a given ciphertext, with name <fname>.cpabe,"
         " using the provided decryption key.")
 
     parser.add_argument('--mpk',
@@ -46,22 +47,22 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.ctxt.endswith(".kpabe"):
-        print "Ciphertext needs to end with .kpabe"
+    if not args.ctxt.endswith(".cpabe"):
+        print("Ciphertext needs to end with .cpabe")
         sys.exit(-1)
 
-    ptxt_fname = args.ctxt.replace(".kpabe", ".prime")
+    ptxt_fname = args.ctxt.replace(".cpabe", ".prime")
 
-    group = PairingGroup('MNT224')
-    
+    group = PairingGroup('SS512')
+
     mpk = read_key_from_file(args.mpk, group)
 
     dkey = read_key_from_file(args.dkey, group)
 
     try:
-        raw = kpabe_decrypt(group, mpk, dkey, io.open(args.ctxt, 'rb'))
+        raw = cpabe_decrypt(group, mpk, dkey, io.open(args.ctxt, 'rb'))
     except PebelDecryptionException as e:
-        print "Unable to decrypt ciphertext: {}".format(e)
+        print("Unable to decrypt ciphertext: {}".format(e))
         sys.exit(-1)
     else:
         with io.open(ptxt_fname, 'wb') as ptxt:
