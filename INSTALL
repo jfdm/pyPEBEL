@@ -1,7 +1,8 @@
-# -*- mode: org -*-
-#+TITLE: pyPEBEL Installation Documentation
+# -*- mode: markdown -*-
+pyPEBEL Installation Documentation
+===================================
 
-* Overview
+## Overview
 
 pyPEBEL has been designed as a python 3.x module and has been built
 against the python 3.x version of Charm. The deployment for pyPEBEL
@@ -12,110 +13,121 @@ A make file is also provided that abstracts over the installation of
 the module itself, and documentation generation. The Makefile also has
 targets used during development.
 
-* Dependencies
+## Dependencies
 
 The current dependencies for pyPEBEL are:
 
-+ [ ] Python3
-+ [ ] pyCrypto
-+ [ ] Charm-Crypto
-  - [ ] pyParsing
-  - [ ] PBC
-  - [ ] GMP
++ Python3
++ pyCrypto
++ Charm-Crypto
+  + pyParsing
+  + PBC
+  + GMP
++ Doxygen
+  + doxypy
+  
+## Instructions
 
-* Instructions
+### Prerequisites
 
-** Prerequisites
 
-To install Charm on Ubuntu 12.10 the following tools also need to
-be installed.
+#### Dev Tools
 
-*** Building
+Git, m4, libssl-dev, GMP, DOxygen and checkinstall.
 
-Git, m4, libssl-dev, GMP, and checkinstall.
+~~~~~{.sh}
+sudo apt-get install git m4 libssl-dev libgmp3c3 limpgmp3-dev checkinstall doxygen
+~~~~~
 
-#+begin_src sh
-sudo apt-get install git m4 libssl-dev libgmp3c3 limpgmp3-dev checkinstall
-#+end_src
+[CheckInstall](http://asic-linux.com.mx/~izto/checkinstall/) is a nice
+Linux utility to install source build software inside a deb/rpm
+managed distro.
 
-[[http://asic-linux.com.mx/~izto/checkinstall/][Checkinstall]] is a nice Linux utility to install source build software
-inside a deb/rpm managed distro.
+#### Python Modules
 
-*** Python Modules
-
-Both pyCrypto and pyParsing are within the standard repositories for
-python. Installation is simply:
-
-#+begin_src sh
+~~~~~{.sh}
+sudo pip install doxypy
 sudo pip install pycrypto
 sudo pip install pyparsing
-#+end_src
+~~~~~
 
-Alternatively on Ubuntu there are the python3 version of the modules in
-repositories.
+### PBC Library
 
-** PBC Library
+[PBC](http://crypto.stanford.edu/pbc/) is a pairing based crypto
+library.  Installation instructions are supplied with the
+project. After compilation from source instead of doing `make install`
+I recommend doing `checkinstall`. The Checkinstall doc-pak information
+is use is:
 
-PBC is a pairing based crypto library, available from:
-http://crypto.stanford.edu/pbc/ Installation instructions are supplied
-with the project. After compilation from source instead of doing
-=make install= I recommend doing =checkinstall=.
++ __Description__: The PBC (Pairing-Based Cryptography) library is a
+free C library (released under the GNU Lesser General Public License)
+built on the GMP library that performs the mathematical operations
+underlying pairing-based cryptosystems.
 
-*** Checkinstall doc-pak information
-+ Description :: The PBC (Pairing-Based Cryptography) library is a
-                 free C library (released under the GNU Lesser General
-                 Public License) built on the GMP library that
-                 performs the mathematical operations underlying
-                 pairing-based cryptosystems.
-+  Source location :: http://crypto.stanford.edu/pbc/files/pbc-0.5.13.tar.gz
-+ provides :: pbc
-+ requires :: libgmp3c2, libgmp3-dev
++ [Source location](http://crypto.stanford.edu/pbc/files/pbc-0.5.13.tar.gz)
+
++ __provides__: pbc
++ __requires__: libgmp3c2, libgmp3-dev
 
 
-** Charm
+### Charm
 
-Charm is a framework for the rapid prototyping of advanced
-cryptography, it is available from: http://www.charm-crypto.com/
-Installation instructions are supplied with the project. After
-compilation from source instead of doing =make install= I recommend
-doing =checkinstall=.
-
-*** Checkinstall doc-pak information 
-+ Description :: Charm is a framework for rapidly prototyping advanced
-                 cryptosystems.  Based on the Python language, it was
-                 designed from the ground up to minimize development
-                 time and code complexity while promoting the reuse of
-                 components.
-+ Source Location :: https://github.com/JHUISI/charm
-+ requires :: pbc, libgmp3c2, libgmp3-dev, python3, m4, python3-dev,
-              python3-pyparsing, libssl-dev
-+ provides :: charm
+[Charm](http://www.charm-crypto.com/) is a framework for the rapid
+prototyping of advanced cryptography.  Installation instructions are
+supplied with the project. After compilation from source instead of
+doing `make install` I recommend doing `checkinstall`.
 
 
++ __Description__: Charm is a framework for rapidly prototyping
+  advanced cryptosystems.  Based on the Python language, it was
+  designed from the ground up to minimize development time and code
+  complexity while promoting the reuse of components.
++ [Source Location](https://github.com/JHUISI/charm)
++ __requires__: pbc, libgmp3c2, libgmp3-dev, python3, m4, python3-dev,
+  python3-pyparsing, libssl-dev
++ __provides__: charm
 
-** pyPEBEL
+## pyPEBEL
 
 To install pyPEBEL into your site-package simply invoke the following
 commands:
-#+begin_src sh
+
+~~~~{.sh}
 python3 distribute_setup.py check build install
-#+end_src
+~~~~
 
 IF successful the module and commandline scripts should be added to
 your python3 site-packages, and PATH.
 
-* Building Documentation
+## Building Documentation
 
-** API Documentation
+### API Documentation
 
-Although pyDoc can be used to generate the API documentation pyDoctor is
-the preferred documentation tool for this project.
+Although pyDoc can be used to generate the API documentation
+__Doxygen__ is the preferred documentation tool for this
+project. Doxygen is a cross-language documentation generator, with
+support for: markdown syntax, call graphs, and multi output
+generation. Personally, it provides a nice balance between User and
+Developer documentation, in a form better than Sphinx.
 
-#+begin_src sh
-sudo pip install pyDoctor
-pydoctor --project-name=pebel --make-html pebel
-#+end_src
+The Doxygen project prefers the use of a non-idomatic means to
+document python code, however, the _doxypy_ filter can be used to
+force doxygen to look inside python docstrings docstrings for the
+documentation.
 
-Documentation can then be found within the folder =apidocs=.
+Any version of Doxygen will do, however, Doxygen v1.8.3 has a nice
+attribute to set a random file as the mainpage. This is the version of
+Doxygen I use.
 
-** TODO User Documentation
+Usage instructions:
+
+~~~~~{.sh}
+
+sudo pip install doxypy
+doxygen DoxyFile
+~~~~~
+
+Generated documentation is generated to found within the folder `doxydoc`.
+
+## User Documentation
+

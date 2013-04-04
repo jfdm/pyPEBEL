@@ -1,6 +1,6 @@
-"""
-Example script showing how the cpabe scheme provided in the module
+"""Example script showing how the cpabe scheme provided in the module
 can be used as part of a python script.
+
 """
 
 import argparse

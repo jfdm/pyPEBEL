@@ -1,4 +1,8 @@
-"""This module provides a series of wrapper functions over the default
+"""@package pebel.cpabe
+
+Provides Bethencourts2007cae CP-ABE scheme.
+
+This module provides a series of wrapper functions over the default
 implementation for the Bethencourt2007cae Ciphertext-Policy Attribute
 Based Encryption (CP-ABE) scheme as provided within the Charm Toolkit.
 
@@ -22,8 +26,15 @@ The generated ciphertext is a linear combination of:
  3. The encrypted session key.
  4. The AES encrypted plaintext.
 
-@author: Jan de Muijnck-Hughes <jfdm@st-andrews.ac.uk>
+@author Jan de Muijnck-Hughes <jfdm@st-andrews.ac.uk>
 
+"""
+
+"""
+@example pyCPABE-setup.py   Example use of the `cpabe_setup` function.
+@example pyCPABE-keygen.py  Example use of the `cpabe_keygen` function.
+@example pyCPABE-encrypt.py Example use of the `cpabe_encrypt` function.
+@example pyCPABE-decrypt.py Example use of the `cpabe_decrypt` function.
 """
 
 import io
@@ -50,35 +61,25 @@ from pebel.util import (
 def cpabe_setup(group):
     """Generates master key pair for the Bethencourt2007cae CP-ABE Scheme.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
+    @param group The `PairingGroup` used within the underlying crypto.
 
-    @rtype: (pk_t, mk_t)
-    @return: The master public and private key pair as defined in the
-             CPabe_BSW07 Scheme.
+    @return The master public and private key pair `(pk_t, mk_t)` as
+             defined in the CPabe_BSW07 Scheme.
+
     """
     return CPabe_BSW07(group).setup()
 
-
 def cpabe_keygen(group, msk, mpk, attributes):
-    """Generates a decryption key pair for the Bethencourt2007cae
+    """Generates a decryption key for the Bethencourt2007cae
     CP-ABE Scheme.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
-
-    @type msk: mk_t
-    @param msk: The Master Secret Key.
-
-    @type mpk: pk_t
-    @param mpk: The Master Public Key.
-
-    @type attributes: List[str]
-    @param attributes: The set of attributes used to generate the
+    @param group The `PairingGroup` used within the underlying crypto.
+    @param msk   The Master Secret Key of type `mk_t`.
+    @param mpk   The Master Public Key of type `pk_t`.
+    @param attributes The set of `str` attributes used to generate the
     decryption key.
 
-    @rtype: (sk_t)
-    @return: The generated decryption key as defined in
+    @return The generated decryption key (`sk_t`) as defined in
              the CPabe_BSW07 Scheme.
 
     """
@@ -88,21 +89,14 @@ def cpabe_keygen(group, msk, mpk, attributes):
 def cpabe_encrypt(group, mpk, ptxt, policy):
     """Encrypts a plain-text using the Bethencourt2007cae CP-ABE Scheme.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
 
-    @type mpk: mk_t
-    @param mpk: The master public key.
-
-    @type ptxt: bytearry
-    @param ptxt: The byte array resulting from io.open or io.IOBytes
+    @param group The `PairingGroup` used within the underlying crypto.
+    @param mpk   The Master Public Key of type `pk_t`.
+    @param ptxt The `bytearray` resulting from io.open or io.IOBytes
                  containing the plaintext.
+    @param policy The `str` policy used to encrypt the plaintext.
 
-    @type policy: str
-    @param policy: The policy used to encrypt the plaintext.
-
-    @rtype: bytearray
-    @return: The encrypted data returned as a byte array.
+    @return The encrypted data returned as a `bytearray`.
 
     """
     cpabe = CPabe_BSW07(group)
@@ -135,23 +129,15 @@ def cpabe_decrypt(group, mpk, deckey, ctxt):
     cipher-text can be satisfied by the set of attributes within the
     decryption key.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
-
-    @type mpk: mk_t
-    @param mpk: The Master Public Key.
-
-    @type deckey: sk_t
-    @param deckey: The decryption key.
-
-    @type ctxt: bytearray
-    @param ctxt: The byte array resulting from io.open or io.IOBytes
+    @param group The `PairingGroup` used within the underlying crypto.
+    @param mpk The Master Public Key of type `mk_t`.
+    @param deckey The decryption key of type `sk_t`.
+    @param ctxt The `bytearray` resulting from io.open or io.IOBytes
                  containing the ciphertext.
 
-    @rtype: bytearray
-    @return: bytearray containing the plaintext.
+    @return The `bytearray` containing the plaintext.
 
-    @raise: L{PebelDecryptionException} if deckey cannot satisfy the
+    @throws PebelDecryptionException If deckey cannot satisfy the
             policy within the ciphertext.
 
     """

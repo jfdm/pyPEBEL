@@ -1,5 +1,5 @@
-"""
-Encrypts data using the CP-ABE from Bethencourt2007cae.
+"""Encrypts data using the CP-ABE from Bethencourt2007cae.
+
 """
 
 import argparse
@@ -17,6 +17,7 @@ from pebel.util import read_key_from_file
 def main():
     """Wrapper function to encrypt a file using the Bethencourt2007cae
     CP-ABE Scheme.
+
     """
 
     parser = argparse.ArgumentParser(

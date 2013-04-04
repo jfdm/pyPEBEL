@@ -1,5 +1,5 @@
-"""
-Generates a decryption key using CP-ABE as defined within Bethencourt2007cae.
+"""Generates a decryption key using CP-ABE as defined within Bethencourt2007cae.
+
 """
 
 import argparse

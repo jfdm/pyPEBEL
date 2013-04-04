@@ -1,5 +1,6 @@
-"""
-Contains custom exceptions used within Pebel.
+"""@package pebel.exceptions
+
+Contains custom exceptions used within pyPEBEL.
 """
 
 
@@ -9,4 +10,6 @@ class PebelException(Exception):
 
 
 class PebelDecryptionException(PebelException):
-    """Exception raised for errors during decryption"""
+    """Raised for errors during decryption"""
+    pass
+    

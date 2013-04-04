@@ -1,4 +1,8 @@
-"""This module provides a series of wrapper functions over the deafult
+"""@package pebel.kpabe
+
+Provides Lewko2008rsw KP-ABE scheme.
+
+This module provides a series of wrapper functions over the deafult
 implementation for the Lewko2008rsw Key-Policy Attribute Based
 Encryption (KP-ABE) scheme as provided within the Charm Toolkit.
 
@@ -22,8 +26,15 @@ The generated ciphertext is a linear combination of:
  3. The encrypted session key.
  4. The AES encrypted plaintext.
 
-@author: Jan de Muijnck-Hughes <jfdm@st-andrews.ac.uk>
+@author Jan de Muijnck-Hughes <jfdm@st-andrews.ac.uk>
 
+"""
+
+"""
+@example pyKPABE-setup.py   Example use of the `kpabe_setup` function.
+@example pyKPABE-keygen.py  Example use of the `kpabe_keygen` function.
+@example pyKPABE-encrypt.py Example use of the `kpabe_encrypt` function.
+@example pyKPABE-decrypt.py Example use of the `kpabe_decrypt` function.
 """
 
 import io
@@ -49,54 +60,38 @@ from pebel.util import (
 def kpabe_setup(group):
     """Generates the master key pair for the Lewko2008rsw KP-ABE Scheme.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
+    @param group The `PairingGroup` used within the underlying crypto.
 
-    @rtype: (pk_t, mk_t)
-    @return: The master publix and private key pair as defined within
+    @return The master public and private key pair `(pk_t, mk_t)` as defined within
     KPabe implementaton.
     """
     return KPabe(group).setup()
 
 def kpabe_keygen(group, msk, mpk, policy):
-    """
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
+    """Generates an decryption key using the Lewmko2008rws KP-ABE Scheme.
 
-    @type msk: mk_t
-    @param msk: The master secret key.
+    @param group The `PairingGroup` used within the underlying crypto.
+    @param msk The master secret key of type `mk_t`.
+    @param mpk The master public key of type `pk_t`.
+    @param policy The policy `str` used to generate the decryption key.
 
-    @type mpk: pk_t
-    @param mpk: The master public key.
 
-    @type policy: str
-    @param policy: The policy used to generate the decryption key.
-
-    @rtype: (sk_t)
-    @return: The generated decryption ket as defined in the KPabe
-    implementation.
+    @return The generated decryption key of type `sk_t`.
     """
     return KPabe(group).keygen(mpk, msk, policy)
 
 
 def kpabe_encrypt(group, mpk, ptxt, attributes):
-    """
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
+    """Encrypts a plaintext using the Lewmko2008rws KP-ABE Scheme.
 
-    @type mpk: mk_t
-    @param mpk: The master public key.
-
-    @type ptxt: bytearray
-    @param ptxt: The bytearray resulting from io.open or io.IOBytes
+    @param group The `PairingGroup` used within the underlying crypto.
+    @param mpk The master public key of type `mk_t`.
+    @param ptxt The `bytearray` resulting from io.open or `io.IOBytes`
     containing the plaintext.
-
-    @type attributes: List[str]
-    @param attributes: The set of attributes used to encrypt the
+    @param attributes The set of `str` attributes used to encrypt the
     plaintext.
 
-    @rtype: bytearray
-    @return: The encrypted data returned as a byte array.
+    @return The encrypted data returned as a `bytearray`.
     """
     kpabe = KPabe(group)
 
@@ -130,23 +125,15 @@ def kpabe_decrypt(group, mpk, deckey, ctxt):
     generate the cipher-text can be satisfied by the policy within the
     decryption key.
 
-    @type group: PairingGroup
-    @param group: The pairing group used within the underlying crypto.
-
-    @type mpk: mk_t
-    @param mpk: The Master Public Key.
-
-    @type deckey: sk_t
-    @param deckey: The decryption key.
-
-    @type ctxt: bytearray
-    @param ctxt: The byte array resulting from io.open or io.IOBytes
+    @param group  The `PairingGroup` used within the underlying crypto.
+    @param mpk    The Master Public Key of type `mk_t`.
+    @param deckey The decryption key of type `sk_t`.
+    @param ctxt   The `bytearray` resulting from `io.open` or `io.IOBytes`
                  containing the ciphertext.
 
-    @rtype: bytearray
-    @return: bytearray containing the plaintext.
+    @return A `bytearray` containing the plaintext.
 
-    @raise: L{PebelDecryptionException} if deckey cannot satisfy the
+    @throw PebelDecryptionException if deckey cannot satisfy the
             policy within the ciphertext.
     """
     kpabe = KPabe(group)

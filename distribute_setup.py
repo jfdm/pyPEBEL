@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='PEBEL',
+    name='pebel',
     version='0.2.0',
     author='Jan de Muijnck-Hughes',
     author_email='jfdm@st-andrews.ac.uk',

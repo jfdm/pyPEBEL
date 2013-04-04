@@ -6,7 +6,7 @@
 SRC=pebel
 NAME=pebel
 
-.PHONY: usage pep8 apidocs clean pylint install
+.PHONY: usage pep8 apidocs clean pylint install build
 
 usage: # Print Targets
 	@grep '^[^#[:space:]].*:' Makefile
@@ -19,11 +19,15 @@ pep8: # Check for PEP8 compliance
 install: # Install
 	python3 distribute_setup.py check build install
 
+build: #Build
+	python3 distribute_setup.py check build
+
 pylint: # Analyse Source
 	pylint -f html --files-output=y
 
 apidocs: ${SRC} # Build API Documentation
-	pydoctor --project-name=pebel --make-html ${SRC}
+	doxygen Doxyfile
 
 clean: # Clean Project
-	rm -rf apidocs *~ *.html
+	rm -rf doxydoc *~
+	python3 distribute_setup.py clean
