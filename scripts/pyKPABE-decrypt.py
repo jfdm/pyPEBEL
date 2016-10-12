@@ -66,7 +66,7 @@ def main():
     else:
         with io.open(ptxt_fname, 'wb') as ptxt:
             for b in raw:
-                ptxt.write(bytes(b))
+                ptxt.write(bytes([b]))
                 ptxt.flush()
 
 if __name__ == '__main__':
