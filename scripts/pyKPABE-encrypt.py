@@ -57,8 +57,8 @@ def main():
 
     with io.open(ctxt_fname, 'wb') as ctxt_file:
         for b in ctxt:
-            ctxt_file.write(bytes(b))
-            
+            ctxt_file.write(bytes([b]))
+
 
 if __name__ == '__main__':
     main()
